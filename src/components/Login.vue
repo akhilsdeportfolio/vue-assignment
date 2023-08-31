@@ -93,6 +93,7 @@ async function handleSubmit() {
                 label="Password"
                 placeholder="Enter password"
                 v-model="password"
+                type="password"
               ></v-text-field>
               <v-btn
                 :loading="isLoading"
