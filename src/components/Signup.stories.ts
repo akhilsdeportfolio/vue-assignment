@@ -1,17 +1,17 @@
 import { Meta, Story } from "@storybook/vue3";
-import Login from "./Login.vue"; // Adjust the path to your component
+import Signup from "./Signup.vue"; // Adjust the path to your component
 
 export default {
   title: "Components/Login",
-  component: Login,
+  component: Signup,
 } as Meta;
 
 const Template: Story = (args) => ({
-  components: { Login },
+  components: { Signup },
   setup() {
     return { args };
   },
-  template: '<Login v-bind="args" />',
+  template: '<Signup v-bind="args" />',
 });
 
 export const Default = Template.bind({});

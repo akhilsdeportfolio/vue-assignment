@@ -14,14 +14,14 @@ const isLoading = ref(false);
 const errorMessage = ref("");
 const regex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 const emailRules = ref([
-  (value) => {
+  (value:any) => {
     if (regex.test(value)) return true;
 
     return "Enter a valid email address";
   },
 ]);
 const passwordRules = ref([
-  (value) => {
+  (value:any) => {
     if (value) return true;
     return "Enter a valid password";
   },
@@ -42,11 +42,10 @@ async function handleSubmit() {
         userStore().setUserLoggedIn(true);
         router.push({ path: "/dashboard", replace: true });
       }
-    } catch (e) {
+    } catch (e:any) {
       isLoading.value = false;
-      snackbar.value = true;
-      const { code } = e;
-      errorMessage.value = code;
+      snackbar.value = true;      
+      errorMessage.value =e.code;
     }
   }
 }

@@ -4,15 +4,28 @@ import { auth } from "../firebase";
 import userStore from "../stores/userData";
 import { useRouter } from "vue-router";
 import {  onBeforeMount, reactive } from "vue";
+import { onMounted } from "vue";
 
 const userData = userStore();
-let requiredData = reactive({});
+let requiredData = reactive({
+    email:"",
+    uid:"",
+    metadata:{
+        creationTime:"",
+        lastSignInTime:""
+    }
+});
 
 onBeforeMount(() => {
-  if (!userData.getUserLoggedIn) router.push({ path: "/", replace: true });
+
+  if (!userData.getUserLoggedIn || !userData.getUserInfo) router.push({ path: "/", replace: true });
   const { uid, email, displayName, metadata } = userData.getUserInfo;
   requiredData = reactive({ uid, email, displayName, metadata });
 });
+
+onMounted(()=>{
+    if (!userData.getUserLoggedIn || !userData.getUserInfo) router.push({ path: "/", replace: true });
+})
 
 const router = useRouter();
 const handleSignOut = async function () {
@@ -34,8 +47,8 @@ const handleSignOut = async function () {
       <div className="flex border-2 border-red">
         <p>User Id : {{ requiredData.uid }}</p>
         <p>Email : {{ requiredData.email }}</p>
-        <p>Creation Time : {{ requiredData.metadata.creationTime }}</p>
-        <p>Last Sign In Time : {{ requiredData.metadata.lastSignInTime }}</p>
+        <p>Creation Time : {{ requiredData?.metadata?.creationTime }}</p>
+        <p>Last Sign In Time : {{ requiredData?.metadata?.lastSignInTime }}</p>
       </div>
 
       <div className="flex border-2 border-green mt-4">
